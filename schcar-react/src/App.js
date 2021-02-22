@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles'
 import { blue } from '@material-ui/core/colors'
 import Routes from './Routes'
-import { Loading, Notify } from './view/components'
+import { Loading, Notify, Alert, Confirm } from './view/components'
 import './global.css'
 
 import { FaUser } from 'react-icons/fa'
@@ -35,8 +35,9 @@ const theme = createMuiTheme({
 const App = () => (
   <Provider store={store}>
     <ThemeProvider theme={theme}>
-      <Loading />
+      <Alert />
       <Notify />
+      <Loading />
       <Routes />
     </ThemeProvider>
   </Provider>
