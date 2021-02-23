@@ -25,7 +25,6 @@ export const setUserToken = token => dispatch => {
     }))
 
     dispatch(success(true));
-    console.log('passou no success')
 }
 
 export const login = credentials => dispatch => {
