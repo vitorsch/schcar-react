@@ -5,3 +5,56 @@
 a, a:hover {
     text-decoration: none !important;
 }
+
+.header {
+    border-bottom: 2px solid rgb(299,299,299);
+}
+
+.header .nav-link {
+    font-weight: 600;
+    color: #555 !important;
+    border: 0;
+    padding: 28px 1.5rem !important;
+    border-bottom: 2px solid transparent;
+}
+
+.header .nav-link:hover {
+    border-bottom: 2px solid #197653;
+}
+
+.header .nav-link .icon-lg {
+    font-size: 22px;
+}
+
+.header .dropdown:hover > .dropdown-menu{
+    display: block;
+}
+.header .dropdown-menu{
+    box-shadow: rgba(0, 0, 0, 0.08) 0px 4px 16px 0p, rgba(0, 0, 0, 0.06) 0px 2px 6px 0px;
+    border: 1px solid #eee;
+    top: 80%;
+}
+
+.header .dropdown-item {
+    padding: 10px 15px;
+    font-weight: 600;
+    color: #444;
+}
+
+.logo-mobile {
+    max-height: 50px;
+}
+
+.menu-mobile .MuiListItemText-primary{
+    font-weight: 600;
+    color: #444;
+}
+
+.menu-mobile svg {
+    font-size: 22px;
+    color: #444;
+}
+
+.MuiDivider-root {
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}

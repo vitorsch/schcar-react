@@ -5,12 +5,14 @@ import { CircularProgress } from '@material-ui/core'
 
 const Auth = lazy(() => import('./view/auth'));
 const Register = lazy (() => import('./view/register'))
+const Vehicles = lazy (() => import('./view/vehicles'))
+
 const Routes = () => (
     <Router>
         <Suspense fallback={<div className="d-flex justify-content-center mt-5 pt-5"><CircularProgress/></div>}>
             <Switch>
 
-                <Route exact path="/vehicles" component={() => (<h1>Veículos</h1>)}/>
+                <Route path="/vehicles" component={Vehicles}/>
                 <Route path="/register" component={Register}/>
                 <Route path="/login" component={Auth}/>
                 <Route exact path="/" component={Auth}/>

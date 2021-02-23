@@ -20,3 +20,4 @@ In order to test this project you may need :
 - npm start
 ###
 (This README.md may update while this project is being built)
+Sign: There may be some english errors, I'm brazilian and writing in english to practice
