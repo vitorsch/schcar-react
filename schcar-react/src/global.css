@@ -6,6 +6,24 @@ a, a:hover {
     text-decoration: none !important;
 }
 
+body {
+    background-color: #eee;
+}
+
+.label-custom {
+    color: #2c2c31;
+    font-weight: 600;
+    font-family: 'Open Sans', sans-serif;
+    margin-bottom: 10px;
+}
+
+.card {
+    background-color: rgb(255,255, 255);
+    box-shadow: rgba(153, 153, 153, 0.2) 0px 2px 4px 0px;
+    border-radius: 3px;
+    border: none;
+}
+
 .header {
     border-bottom: 2px solid rgb(299,299,299);
 }

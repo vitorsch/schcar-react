@@ -1,7 +1,7 @@
 # Schcar-react
 
 ## About this Project
-This project is a interface( front-end ) made using react, redux and other libraries. Which will be used to integrate with laravel and sql for backend. The final goal is to serve as a interface for a webstore of cars.
+This project is a interface( front-end ) made using react, redux and other libraries. Which will be used to integrate with laravel and sql for backend. The final goal is to serve as a interface for a webstore of vehicles.
 
 ## Clone and start
 In order to test this project you may need :
