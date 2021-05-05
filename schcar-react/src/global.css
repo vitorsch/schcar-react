@@ -6,6 +6,12 @@ a, a:hover {
     text-decoration: none !important;
 }
 
+@media (max-width : 576px) {
+    body {
+        margin-top: 56px;
+    }
+}
+
 body {
     background-color: #eee;
 }

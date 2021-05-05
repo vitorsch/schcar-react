@@ -56,3 +56,13 @@
 .box-image .img-action:hover {
     background-color: #d53545;
 }
+
+.tips {
+    position: sticky;
+    top: 20px;
+}
+
+.btn-save{
+    position: fixed;
+    bottom: 30px;
+}

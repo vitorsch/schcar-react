@@ -1,6 +1,7 @@
 import React from 'react'
 import { store, show, change, cep, brand, model, version, uploadPhoto, deletePhoto, reorderPhoto } from '../../store/actions/vehicles.action'
-import { CircularProgress, InputAdornment, TextField, Select, MenuItem, Checkbox, FormControlLabel } from '@material-ui/core'
+import { CircularProgress, InputAdornment, TextField, Select, MenuItem, Checkbox, FormControlLabel, Button } from '@material-ui/core'
+import { Link } from 'react-router-dom'
 import Header from '../header'
 import { Confirm } from '../components'
 import MaskedInput from 'react-text-mask'
@@ -8,7 +9,7 @@ import NumberFormat from 'react-number-format'
 import { rootUrl } from '../../config/App'
 import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 import ArrayMove from 'array-move'
-import { FaTrash } from 'react-icons/fa'
+import { FaTrash, FaSave } from 'react-icons/fa'
 
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -75,13 +76,19 @@ export default function VehicleEdit(props) {
             if (state.vehicle_id) {
                 dispatch(show(state.vehicle_id).then(res => {
                     if (res) {
-                        setState({ isLoading: false })
+                        setState({
+                            ...state,
+                            isLoading: false
+                        })
                     }
                 }))
             } else {
                 dispatch(store()).then(res => {
                     if (res) {
-                        setState({ isLoading: false })
+                        setState({
+                            ...state,
+                            isLoading: false
+                        })
                     }
                 })
             }
@@ -103,12 +110,21 @@ export default function VehicleEdit(props) {
     }
 
     const _deletePhoto = (id) => {
-        setState({ isDeleted: id })
-        dispatch(deletePhoto(id)).then(res => res && setState({ isDeleted: null }))
+        setState({
+            ...state,
+            isDeleted: id
+        })
+        dispatch(deletePhoto(id)).then(res => res && setState({
+            ...state,
+            isDeleted: null
+        }))
     }
 
     const handleConfirm = event => {
-        setState({ confirmEl: event.currentTarget });
+        setState({
+            ...state,
+            confirmEl: event.currentTarget
+        });
     }
 
     const onSortEnd = ({ oldIndex, newIndex }) => {
@@ -119,7 +135,7 @@ export default function VehicleEdit(props) {
 
     return (
         <>
-            <Header title="Veículos - Gestão" />
+            <Header title="Veículos - Gestão" button={<Button color="inherit" className="ms-auto">Salvar</Button>}/>
 
             <div className="container mt-4 pt-3">
                 {(state.isLoading) ? <div className="d-flex justify-content-center mt-5 pt-5"><CircularProgress /></div> :
@@ -127,7 +143,7 @@ export default function VehicleEdit(props) {
                         <div className="col-md-7">
                             <h3 className="font-weight-normal mb-4">Localização do Veículo</h3>
 
-                            <div className="card card-body">
+                            <div className="card card-body" onClick={() => setState({ ...state, tips: 0 })}>
                                 <div className="row">
                                     <div className="col-md-7">
                                         <label className="label-custom">CEP</label>
@@ -142,8 +158,14 @@ export default function VehicleEdit(props) {
                                                     dispatch(change({ zipCode: text.target.value }));
                                                     if (text.target.value.length > 8) {
                                                         //chamar Cep
-                                                        setState({ isLoadingCep: true })
-                                                        dispatch(cep(text.target.value)).then(res => res && setState({ isLoadingCep: false }))
+                                                        setState({
+                                                            ...state,
+                                                            isLoadingCep: true
+                                                        })
+                                                        dispatch(cep(text.target.value)).then(res => res && setState({
+                                                            ...state,
+                                                            isLoadingCep: false
+                                                        }))
                                                         if (data.error.zipCode) {
                                                             delete data.error.zipCode;
                                                             delete data.error.uf
@@ -192,7 +214,7 @@ export default function VehicleEdit(props) {
                             </div>
 
                             <h3 className="font-weight-normal mt-4 mb-4">Dados do Veículo</h3>
-                            <div className="card card-body">
+                            <div className="card card-body" onClick={() => setState({ ...state, tips: 1 })}>
                                 <div className="form-group">
                                     <label className="label-custom">CATEGORIA</label>
                                     <Select
@@ -328,7 +350,7 @@ export default function VehicleEdit(props) {
                                 </div>
                             </div>
 
-                            <div className="card card-body mt-4">
+                            <div className="card card-body mt-4" onClick={() => setState({ ...state, tips: 1 })}>
                                 <div className="row">
                                     {/* INICIO MOSTRAR VEÍCULOS SE FOR CARRO */}
                                     {(data.vehicle.vehicle_type === 2020) &&
@@ -465,7 +487,7 @@ export default function VehicleEdit(props) {
                             {(data.vehicle.vehicle_type) &&
                                 <>
                                     <h3 className="font-weight-normal mt-4 mb-4">Itens e Opcionais</h3>
-                                    <div className="card card-body">
+                                    <div className="card card-body" onClick={() => setState({ ...state, tips: 1 })}>
                                         <div className="row">
                                             {data.features.map(item => (item.vehicle_type_id === data.vehicle.vehicle_type) && (
                                                 <div key={item.id} className="col-md-6">
@@ -565,6 +587,7 @@ export default function VehicleEdit(props) {
                                         onChange={text => dispatch(change({
                                             title: text.target.value
                                         }))}
+                                        onFocus={() => setState({ ...state, tips: 2 })}
                                     />
                                 </div>
                                 <div className="form-group">
@@ -577,6 +600,7 @@ export default function VehicleEdit(props) {
                                         onChange={text => dispatch(change({
                                             description: text.target.value
                                         }))}
+                                        onFocus={() => setState({ ...state, tips: 3 })}
                                     />
                                 </div>
                             </div>
@@ -609,7 +633,10 @@ export default function VehicleEdit(props) {
                                                             <Confirm
                                                                 open={(item.id === parseInt(state.confirmEl.id))}
                                                                 onConfirm={() => _deletePhoto(item.id)}
-                                                                onClose={() => setState({ confirmEl: null })}
+                                                                onClose={() => setState({
+                                                                    ...state,
+                                                                    confirmEl: null
+                                                                })}
                                                             />
                                                         }
                                                     </>
@@ -617,10 +644,10 @@ export default function VehicleEdit(props) {
                                             </div>
                                         </div>
                                     ))}
-                                    
+
                                     <div className="col-6 col-md-4">
                                         <div className="box-image box-upload d-flex justify-content-center align-items-center mt-3">
-                                            <input onChange={handleUpload} type="file" multiple name="file" className="file-input" />
+                                            <input onClick={() => setState({ ...state, tips: 4 })} onChange={handleUpload} type="file" multiple name="file" className="file-input" />
                                             {(data.upload_photo) ? <CircularProgress /> :
                                                 <p className="box-text">
                                                     <span className="text-plus">+</span>
@@ -633,8 +660,53 @@ export default function VehicleEdit(props) {
                             </div>
 
                         </div>
-                        <div className="col-md-5">
+                        <div className="col-md-5 d-none d-md-block">
+                            <div className="tips">
+                                <h3 className="font-weight-normal mb-4">Dicas</h3>
+                                <div className="card card-body">
+                                    {(state.tips === 0) &&
+                                        <>
+                                            <h5>Endereço</h5>
+                                            <p>O endereço é a primeira informação que os consumidores procuram quando estão pesquisando Veículos.<br /><br />Anúncios com <strong>endereços</strong> terão mais oportunidades de serem exibidos nas novas formas de buscas, e receber mais contatos.</p>
+                                        </>
+                                    }
+                                    {(state.tips === 1) &&
+                                        <>
+                                            <h5>Dados verídicos</h5>
+                                            <p>Informe os dados corretos <br />(quilometragem, ano, modelo, versão, etc.)<br />para conseguir o comprador rapidamente.</p>
+                                        </>
+                                    }
+                                    {(state.tips === 2) &&
+                                        <>
+                                            <h5>Título</h5>
+                                            <p>Sugerimos complementar o título com características do seu carro<br />Ex: Fiat Palio 2004 em perfeito estado.</p>
+                                        </>
+                                    }
+                                    {(state.tips === 3) &&
+                                        <>
+                                            <h5>Descrição</h5>
+                                            <p>Inclua características do carro, como ar condicionado, vidros e travas elétricas, alarme, som, DVD, air bag duplo, IPVA pago, dídividas pendentes, etc.</p>
+                                        </>
+                                    }
+                                    {(state.tips === 4) &&
+                                        <>
+                                            <p><strong>Fotos reais:</strong> Envie fotos reais do seu carro, assim aumenta suas chances de convencer o potencial comprador.<br /><br />
+                                                <strong>Todos os ângulos:</strong> Além das fotos do exterior do carro, não se esqueça de mostrar o interior.
+                                            </p>
+                                        </>
+                                    }
+                                </div>
+                            </div>
 
+                            <div className="d-flex btn-save">
+                                <Link to="/vehicles" className="me-2">
+                                    <Button variant="contained" size="large">Voltar</Button>
+                                </Link>
+                                <Button variant="contained" color="primary" size="large">
+                                    <FaSave size="1.5rem" className="me-3"/>
+                                    Salvar
+                                </Button>
+                            </div>
                         </div>
                     </div>}
             </div>
