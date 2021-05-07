@@ -66,8 +66,7 @@ export const update = (data) => dispatch => {
     dispatch(changeLoading({
         open: true
     }))
-
-    return HttpAuth.put('/vehicles' + data.id)
+    return HttpAuth.put('/vehicles/' + data.id, data)
         .then(res => {
             dispatch(changeLoading({
                 open: false
