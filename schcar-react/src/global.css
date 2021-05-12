@@ -82,3 +82,33 @@ body {
 .MuiDivider-root {
     background-color: rgba(0, 0, 0, 0.5) !important;
 }
+
+
+@media (max-width: 576px) {
+    .vehicle-img img {
+        max-width: 100px;
+    }
+
+    .MuiMenu-paper {
+        position: fixed !important;
+        top: auto !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        max-width: 100% !important;
+        border-radius: 0 !important;
+    }
+
+    .MuiMenu-paper ~ div::before {
+        content: "";
+        z-index: -1;
+        position: fixed;
+        inset: 0px;
+        background-color: rgba(0,0,0,0.5);
+    }
+}
+
+.MuiMenuItem-root {
+    padding-top: 9px !important;
+    padding-bottom: 9px !important;
+}
